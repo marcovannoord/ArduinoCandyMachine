@@ -9,7 +9,7 @@
 */
 #include <Keypad.h>
 #include <FiniteStateMachine.h>
-#define NUMBER_OF_STATES 1
+#define NUMBER_OF_STATES 3
 const byte ROWS = 4; //four rows
 const byte COLS = 4; //three columns
 char keys[ROWS][COLS] = {
@@ -24,19 +24,21 @@ byte colPins[COLS] = { 9, 8, 7, 6 }; //connect to the column pinouts of the keyp
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 byte ledPin = 13;
+byte motorPin = 12;
 
 boolean blink = false;
 boolean ledPin_state;
 
 State Standby = State(standbyState);
 State Processing = State(processingState);
+State MotorTest = State(motorTestState);
 
 FSM ArduinoStateMachine = FSM(Standby);
 
 void setup(){
 	Serial.begin(9600);
-	Serial.println("start");
 	pinMode(ledPin, OUTPUT);              // Sets the digital pin as output.
+	pinMode(motorPin, OUTPUT);				//dummy motor
 	digitalWrite(ledPin, HIGH);           // Turn the LED on.
 	ledPin_state = digitalRead(ledPin);   // Store initial LED state. HIGH when LED is on.
 	keypad.addEventListener(keypadEvent); // Add an event listener for this keypad
@@ -44,19 +46,27 @@ void setup(){
 }
 
 void loop(){
-	ArduinoStateMachine.update();
+	ArduinoStateMachine.update(); //starts the function that's part of the state
 }
 
 void standbyState(){
-	handleKeyboard();
+	checkKeyboard();
 }
 void processingState(){
 	delay(2000);
 	ArduinoStateMachine.transitionTo(Standby);
 }
+void motorTestState(){
+	digitalWrite(motorPin, HIGH);
+	//delay(1000);
+	digitalWrite(motorPin, LOW);
+	//ArduinoStateMachine.transitionTo(Standby);
+	checkKeyboard();
+}
 
-void handleKeyboard(){
-	char key = keypad.getKey();
+//function that reads does some debugging and show-off for the keyboard
+void checkKeyboard(){
+	char key = keypad.getKey(); //vital to the workings of the keyboard
 
 	if (key) {
 		Serial.println(key);
@@ -77,6 +87,12 @@ void keypadEvent(KeypadEvent key){
 		}
 		else if (key == '5'){
 			ArduinoStateMachine.transitionTo(Processing);
+		}
+		else if (key == '1'){
+			ArduinoStateMachine.transitionTo(MotorTest);
+		}
+		else if (key == '2'){
+			ArduinoStateMachine.transitionTo(Standby);
 		}
 		break;
 
