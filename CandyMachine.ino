@@ -48,7 +48,7 @@ void setup(){
 void loop(){
 	ArduinoStateMachine.update(); //starts the function that's part of the state
 }
-
+//this is the "normal" state, if no other state preferred, this state should be active. 
 void standbyState(){
 	checkKeyboard();
 }
@@ -58,6 +58,7 @@ void processingState(){
 }
 
 void motorStartState(){
+	delay(200); //200ms to make fully sure motor isn't already running, thus ruining the
 	digitalWrite(motorPin, HIGH);
 }
 void motorTestState(){
@@ -71,19 +72,8 @@ void motorStopState(){
 	digitalWrite(motorPin, LOW);
 }
 
-//function that reads does some debugging and show-off for the keyboard
-void checkKeyboard(){
-	char key = keypad.getKey(); //vital to the workings of the keyboard
 
-	if (key) {
-		Serial.println(key);
-	}
-	if (blink){
-		digitalWrite(ledPin, !digitalRead(ledPin));    // Change the ledPin from Hi2Lo or Lo2Hi.
-		delay(100);
-	}
-}
-
+//Interrupt routine that gets called when a motor did a full rotation. Be careful not to put any time-hogging stuff in it!
 void motorStop(){ 
 	
 	if (ArduinoStateMachine.isInState(MotorTest)){
