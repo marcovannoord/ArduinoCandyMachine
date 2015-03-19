@@ -25,12 +25,15 @@ void keypadEvent(KeypadEvent key){
 			selectedColumn = 6;
 		}
 		else if (key == '7'){
-			ArduinoStateMachine.transitionTo(Processing);
+			selectedColumn = 7;
+			ArduinoStateMachine.transitionTo(Processing); 
 		}
 		else if (key == '8'){
+			selectedColumn = 8;
 			ArduinoStateMachine.transitionTo(MotorTest);
 		}
 		else if (key == '9'){
+			selectedColumn = 9;
 			ArduinoStateMachine.transitionTo(Standby);
 		}
 		else if (key == 'A'){

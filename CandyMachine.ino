@@ -48,7 +48,8 @@ void setup(){
 	pinMode(motorPin, OUTPUT);				//dummy motor
 	digitalWrite(ledPin, HIGH);           // Turn the LED on.
 	ledPin_state = digitalRead(ledPin);   // Store initial LED state. HIGH when LED is on.
-	readEEPROM();
+	readEEPROM(); //reading the inventory and prices
+	//updatePrices //TODO: get prices from internet
 	keypad.addEventListener(keypadEvent); // Add an event listener for this keypad
 	attachInterrupt(0, motorStop, RISING); //interrupt for full rotation of motor
 }
