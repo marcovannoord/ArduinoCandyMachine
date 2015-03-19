@@ -31,7 +31,7 @@ boolean ledPin_state;
 
 State Standby = State(standbyState);
 State Processing = State(processingState);
-State MotorTest = State(motorTestState);
+State MotorTest = State(motorStartState, motorTestState, motorStopState);
 
 FSM ArduinoStateMachine = FSM(Standby);
 
@@ -56,12 +56,19 @@ void processingState(){
 	delay(2000);
 	ArduinoStateMachine.transitionTo(Standby);
 }
-void motorTestState(){
+
+void motorStartState(){
 	digitalWrite(motorPin, HIGH);
+}
+void motorTestState(){
+	
 	//delay(1000);
-	digitalWrite(motorPin, LOW);
+	
 	//ArduinoStateMachine.transitionTo(Standby);
 	checkKeyboard();
+}
+void motorStopState(){
+	digitalWrite(motorPin, LOW);
 }
 
 //function that reads does some debugging and show-off for the keyboard
@@ -77,8 +84,13 @@ void checkKeyboard(){
 	}
 }
 
-void motorStop(){
-	digitalWrite(ledPin, !digitalRead(ledPin));
+void motorStop(){ 
+	
+	if (ArduinoStateMachine.isInState(MotorTest)){
+		digitalWrite(ledPin, !digitalRead(ledPin)); //toggle led to show the motor just rotated
+		ArduinoStateMachine.immediateTransitionTo(Standby); //TODO: might not be safe; will always transfer to Standby, even if motor is not running?
+															//UPDATE: Fixed, now checking if in state where motor can run (maybe add other states where motor might run?)
+	}
 }
 // Taking care of some special events.
 void keypadEvent(KeypadEvent key){
