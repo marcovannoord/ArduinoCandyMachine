@@ -19,7 +19,7 @@ char keys[ROWS][COLS] = {
 	{ '*', '0', '#', 'D' }
 };
 
-byte rowPins[ROWS] = { 5, 4, 3, 2 }; //connect to the row pinouts of the keypad
+byte rowPins[ROWS] = { 5, 4, 3, 10 }; //connect to the row pinouts of the keypad
 byte colPins[COLS] = { 9, 8, 7, 6 }; //connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
@@ -42,7 +42,7 @@ void setup(){
 	digitalWrite(ledPin, HIGH);           // Turn the LED on.
 	ledPin_state = digitalRead(ledPin);   // Store initial LED state. HIGH when LED is on.
 	keypad.addEventListener(keypadEvent); // Add an event listener for this keypad
-
+	attachInterrupt(0, motorStop, RISING); //interrupt for full rotation of motor
 }
 
 void loop(){
@@ -77,6 +77,9 @@ void checkKeyboard(){
 	}
 }
 
+void motorStop(){
+	digitalWrite(ledPin, !digitalRead(ledPin));
+}
 // Taking care of some special events.
 void keypadEvent(KeypadEvent key){
 	switch (keypad.getState()){
