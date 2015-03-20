@@ -59,21 +59,5 @@ void loop(){
 
 }
 
-void readEEPROM(){
-
-	//first let's read the eeprom
-	for (int i = 0; i < sizeof(inventory); i++){
-		inventory[i] = EEPROM.read(i); //read EEPROM at address i
-		Serial.print(i);
-		Serial.print('.');
-		Serial.println(inventory[i]);
-		if (inventory[i] == 255) {//we can't have 255 items in our inventory, so we'll assume we have none
-			EEPROM.write(i, 0);
-			inventory[i] = 0;
-		}
-	}
-
-}
-
 
 

@@ -16,6 +16,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CandyMachine.ino" />
+    <None Include="KeyHandler.ino" />
+    <None Include="Standby.ino" />
+    <None Include="Motor.ino" />
+    <None Include="Processing.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Visual Micro\.CandyMachine.vsarduino.h">

@@ -1,13 +1,15 @@
 void motorStartState(){
 	delay(200); //200ms to make fully sure motor isn't already running, thus ruining the
-	digitalWrite(motorPin, HIGH);
+	digitalWrite(12, HIGH);
+
 }
 void motorTurningState(){
 	//motor should be running while in this state
-	checkKeyboard(); //checkKeyboard only here for testing purposes; no keyboard entry necessary during handout
+	checkKeyboard(); //checkKeyboard only here for testing purposes; no keyboard maybe possible during turning, could keep motor turning!!
 }
 void motorStopState(){
-	digitalWrite(motorPin, LOW);
+	digitalWrite(getColMotorPin(), LOW);
+	reduceStock();
 }
 
 
@@ -19,4 +21,14 @@ void motorStop(){
 		ArduinoStateMachine.immediateTransitionTo(Standby); //TODO: might not be safe; will always transfer to Standby, even if motor is not running?
 		//UPDATE: Fixed, now checking if in state where motor can run (maybe add other states where motor might run?)
 	}
+}
+
+//gets the pin that needs to be put LOW (since we're switching the positive side)
+int getRowMotorPin(){
+	return 1;
+}
+
+//gets the pin that needs to be put HIGH (since we're switching the negative side)
+int getColMotorPin(){
+	return 12;
 }

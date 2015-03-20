@@ -60,4 +60,9 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <CandyMachine.ino>
+#include <KeyHandler.ino>
+#include <Motor.ino>
+#include <Processing.ino>
+#include <Scripts.ino>
+#include <Standby.ino>
 #endif
