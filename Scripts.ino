@@ -11,8 +11,8 @@ void readEEPROM(){
 		}
 	}
 	EEPROM.write(1, 10);//some fake product, TODO: Remove
-	writePrice(1);
-	readPrice(1);
+	//writePrice(1);
+	//readPrice(1);
 }
 
 int matrixToInt(){
@@ -27,6 +27,12 @@ void reduceStock(){
 	inventory[matrixToInt()]--; //reduce stock in memory
 	EEPROM.write(matrixToInt(),inventory[matrixToInt()]);
 }
+
+double uintToDouble(uint16_t in){
+	return in / 100;
+}
+
+
 
 void writePrice(int number){
 	eeprom_write_word((uint16_t*)50, 200); //A0

@@ -5,12 +5,16 @@ void processingState(){
 	lcd.clear();
 	//checking if row isn't empty
 	int inventorySelected = inventory[matrixToInt()];
+	double price = uintToDouble(prices[matrixToInt()]);
 	if (inventorySelected == 0){
 		
 		lcd.print("No product");
 	}
 	else{
 		lcd.print(" Processing...");
+		lcd.setCursor(0, 1);
+		lcd.print("price: E");
+		lcd.print(price);
 		lcd.blink();
 		delay(1000);
 		Serial.println(inventorySelected);

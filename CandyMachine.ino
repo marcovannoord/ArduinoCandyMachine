@@ -49,6 +49,7 @@ FSM ArduinoStateMachine = FSM(Standby);
 
 unsigned long previousMillis = 0;        // will store last time LED was updated
 
+uint16_t prices[40] = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
 
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(53, 52, 50, 48, 46, 44);
