@@ -11,7 +11,7 @@
 #include <FiniteStateMachine.h>
 #include <EEPROM.h>
 #include <LiquidCrystal.h>
-#include <Timer3\TimerThree.h>
+#define KEYTIMEOUT 2000
 
 const byte ROWS = 4; //four rows from keyboard
 const byte COLS = 4; //four cols from keyboard
@@ -43,6 +43,9 @@ State MotorTest = State(motorStartState, motorTurningState, motorExitState);
 
 FSM ArduinoStateMachine = FSM(Standby);
 
+unsigned long previousMillis = 0;        // will store last time LED was updated
+
+
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(53, 52, 50, 48, 46, 44);
 
@@ -59,14 +62,10 @@ void setup(){
 	attachInterrupt(0, motorStop, RISING); //interrupt for full rotation of motor
 	// set up the LCD's number of columns and rows: 
 	lcd.begin(16, 2);
-	// Print a message to the LCD.
-	
 }
 
 void loop(){
 	ArduinoStateMachine.update(); //starts the function that's part of the state
-
 }
-
 
 

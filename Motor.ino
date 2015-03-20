@@ -3,8 +3,6 @@ void motorStartState(){
 	digitalWrite(12, HIGH);
 	lcd.clear();
 	lcd.print("Handing out");
-	Timer3.initialize(2000000); //start a timer to prevent throwing everything out
-	Timer3.attachInterrupt(motorTimeout);
 
 }
 void motorTurningState(){

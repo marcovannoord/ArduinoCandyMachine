@@ -1,5 +1,6 @@
 // Taking care of some special events.
 void keypadEvent(KeypadEvent key){
+
 	switch (keypad.getState()){
 	case PRESSED:
 		if (key == '#') {
@@ -100,4 +101,11 @@ void displayWriteRow(char input){
 void displayWriteCol(int input){
 	lcd.setCursor(6, 1); // bottom left
 	lcd.print(input);
+}
+
+void keyTimeout(){//needs to clear everything, since we can't go to standbyState again
+	selectedColumn = 0;
+	selectedRow = 0;
+	lcd.setCursor(0, 1);
+	lcd.print("          ");
 }
