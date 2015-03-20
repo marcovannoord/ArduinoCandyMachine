@@ -19,6 +19,9 @@ void motorExitState(){
 	digitalWrite(getColMotorPin(), LOW);
 	reduceStock();
 	lcd.noBlink();
+	lcd.clear();
+	lcd.print("  Thank you!  ");
+	delay(2000);
 }
 
 
@@ -27,7 +30,7 @@ void motorStop(){
 
 	if (ArduinoStateMachine.isInState(MotorTest)){
 		digitalWrite(ledPin, !digitalRead(ledPin)); //toggle led to show the motor just rotated
-		ArduinoStateMachine.immediateTransitionTo(Standby); //TODO: might not be safe; will always transfer to Standby, even if motor is not running?
+		ArduinoStateMachine.transitionTo(Standby); //TODO: might not be safe; will always transfer to Standby, even if motor is not running?
 		//UPDATE: Fixed, now checking if in state where motor can run (maybe add other states where motor might run?)
 	}
 }

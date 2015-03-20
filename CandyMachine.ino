@@ -11,8 +11,11 @@
 #include <FiniteStateMachine.h>
 #include <EEPROM.h>
 #include <LiquidCrystal.h>
+#include <avr/eeprom.h>
 #define KEYTIMEOUT 5000
 #define MOTORTIMEOUT 4000
+#define PRICEOFFSET 50
+#define PRODUCT_AMOUNT 40
 
 const byte ROWS = 4; //four rows from keyboard
 const byte COLS = 4; //four cols from keyboard
@@ -26,7 +29,7 @@ char keys[ROWS][COLS] = {
 byte rowPins[ROWS] = { 5, 4, 3, 10 }; //connect to the row pinouts of the keypad
 byte colPins[COLS] = { 9, 8, 7, 6 }; //connect to the column pinouts of the keypad
 
-byte inventory[40]; //stores the amount of inventory left, here we have 4 rows of 10 items each
+byte inventory[PRODUCT_AMOUNT]; //stores the amount of inventory left, here we have 4 rows of 10 items each
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 byte ledPin = 13;
@@ -53,6 +56,7 @@ LiquidCrystal lcd(53, 52, 50, 48, 46, 44);
 void setup(){
 	delay(200); //delay because VS is too slow?
 	Serial.begin(9600);
+	Serial.println("start");
 	pinMode(ledPin, OUTPUT);              // Sets the digital pin as output.
 	pinMode(motorPin, OUTPUT);				//dummy motor
 	digitalWrite(ledPin, HIGH);           // Turn the LED on.

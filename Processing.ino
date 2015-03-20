@@ -12,11 +12,11 @@ void processingState(){
 	else{
 		lcd.print(" Processing...");
 		lcd.blink();
-		delay(2000);
+		delay(1000);
 		Serial.println(inventorySelected);
 		ArduinoStateMachine.transitionTo(MotorTest);
 		return;// don't forget return, otherwise function will continue towards next transition.
 	}
-	delay(2000);
+	delay(2000); //impossible to get here
 	ArduinoStateMachine.transitionTo(Standby);
 }
