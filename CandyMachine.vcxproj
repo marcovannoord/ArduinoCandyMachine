@@ -74,6 +74,7 @@
     <None Include="KeyHandler.ino" />
     <None Include="Motor.ino" />
     <None Include="Processing.ino" />
+    <None Include="Scripts.ino" />
     <None Include="Standby.ino" />
   </ItemGroup>
   <ItemGroup>

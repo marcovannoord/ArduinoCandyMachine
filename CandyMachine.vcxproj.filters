@@ -20,6 +20,7 @@
     <None Include="Standby.ino" />
     <None Include="Motor.ino" />
     <None Include="Processing.ino" />
+    <None Include="Scripts.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Visual Micro\.CandyMachine.vsarduino.h">

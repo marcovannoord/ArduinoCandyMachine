@@ -1,15 +1,20 @@
 void motorStartState(){
 	delay(200); //200ms to make fully sure motor isn't already running, thus ruining the
 	digitalWrite(12, HIGH);
+	lcd.clear();
+	lcd.print("Handing out");
+	Timer3.initialize(2000000); //start a timer to prevent throwing everything out
+	Timer3.attachInterrupt(motorTimeout);
 
 }
 void motorTurningState(){
 	//motor should be running while in this state
 	checkKeyboard(); //checkKeyboard only here for testing purposes; no keyboard maybe possible during turning, could keep motor turning!!
 }
-void motorStopState(){
+void motorExitState(){
 	digitalWrite(getColMotorPin(), LOW);
 	reduceStock();
+	lcd.noBlink();
 }
 
 
@@ -31,4 +36,8 @@ int getRowMotorPin(){
 //gets the pin that needs to be put HIGH (since we're switching the negative side)
 int getColMotorPin(){
 	return 12;
+}
+
+void motorTimeout(){
+	ArduinoStateMachine.transitionTo(Standby); //TODO: check if this always work, and also churn out some error
 }

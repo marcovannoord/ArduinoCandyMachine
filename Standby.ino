@@ -1,6 +1,8 @@
 void standbyEnterState(){
 	selectedColumn = 0; //reset row and column
 	selectedRow = 0;
+	lcd.clear();
+	lcd.print("Kies een product");
 }
 //this is the "normal" state, if no other state preferred, this state should be active. 
 void standbyState(){

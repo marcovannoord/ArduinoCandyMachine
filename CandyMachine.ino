@@ -10,6 +10,8 @@
 #include <Keypad.h>
 #include <FiniteStateMachine.h>
 #include <EEPROM.h>
+#include <LiquidCrystal.h>
+#include <Timer3\TimerThree.h>
 
 const byte ROWS = 4; //four rows from keyboard
 const byte COLS = 4; //four cols from keyboard
@@ -37,9 +39,12 @@ boolean ledPin_state;
 
 State Standby = State(standbyEnterState, standbyState, standbyExitState);
 State Processing = State(processingState);
-State MotorTest = State(motorStartState, motorTurningState, motorStopState);
+State MotorTest = State(motorStartState, motorTurningState, motorExitState);
 
 FSM ArduinoStateMachine = FSM(Standby);
+
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(53, 52, 50, 48, 46, 44);
 
 void setup(){
 	delay(200); //delay because VS is too slow?
@@ -52,6 +57,10 @@ void setup(){
 	//updatePrices //TODO: get prices from internet
 	keypad.addEventListener(keypadEvent); // Add an event listener for this keypad
 	attachInterrupt(0, motorStop, RISING); //interrupt for full rotation of motor
+	// set up the LCD's number of columns and rows: 
+	lcd.begin(16, 2);
+	// Print a message to the LCD.
+	
 }
 
 void loop(){
