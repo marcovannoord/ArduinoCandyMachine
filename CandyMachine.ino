@@ -11,7 +11,8 @@
 #include <FiniteStateMachine.h>
 #include <EEPROM.h>
 #include <LiquidCrystal.h>
-#define KEYTIMEOUT 2000
+#define KEYTIMEOUT 5000
+#define MOTORTIMEOUT 4000
 
 const byte ROWS = 4; //four rows from keyboard
 const byte COLS = 4; //four cols from keyboard

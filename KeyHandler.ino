@@ -1,8 +1,8 @@
 // Taking care of some special events.
 void keypadEvent(KeypadEvent key){
-
 	switch (keypad.getState()){
 	case PRESSED:
+		previousMillis = millis();
 		if (key == '#') {
 			digitalWrite(ledPin, !digitalRead(ledPin));
 			ledPin_state = digitalRead(ledPin);        // Remember LED state, lit or unlit.

@@ -3,11 +3,17 @@ void motorStartState(){
 	digitalWrite(12, HIGH);
 	lcd.clear();
 	lcd.print("Handing out");
+	previousMillis = millis();
 
 }
 void motorTurningState(){
 	//motor should be running while in this state
-	checkKeyboard(); //checkKeyboard only here for testing purposes; no keyboard maybe possible during turning, could keep motor turning!!
+	if (millis() - previousMillis >= MOTORTIMEOUT ){
+		motorTimeout();
+		previousMillis = millis();
+
+	}
+	
 }
 void motorExitState(){
 	digitalWrite(getColMotorPin(), LOW);

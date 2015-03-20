@@ -9,7 +9,9 @@ void standbyEnterState(){
 //this is the "normal" state, if no other state preferred, this state should be active. 
 void standbyState(){
 	if (millis() - previousMillis >= KEYTIMEOUT){
-		(keyTimeout);
+		keyTimeout();
+		previousMillis = millis();
+
 	}
 	checkKeyboard();
 	if (selectedRow != 0 && selectedColumn != 0){
