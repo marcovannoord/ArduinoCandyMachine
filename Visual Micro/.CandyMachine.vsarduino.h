@@ -64,4 +64,5 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <Processing.ino>
 #include <Scripts.ino>
 #include <Standby.ino>
+#include <wifi.ino>
 #endif

@@ -53,6 +53,7 @@ void keypadEvent(KeypadEvent key){
 		else if (key == 'B'){
 			selectedRow = 2;
 			displayWriteRow('B');
+			ArduinoStateMachine.transitionTo(Wifi);
 		}
 		else if (key == 'C'){
 			selectedRow = 3;

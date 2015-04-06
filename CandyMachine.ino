@@ -12,10 +12,20 @@
 #include <EEPROM.h>
 #include <LiquidCrystal.h>
 #include <avr/eeprom.h>
+#include "ESP8266.h"
+
 #define KEYTIMEOUT 5000
 #define MOTORTIMEOUT 4000
 #define PRICEOFFSET 50
 #define PRODUCT_AMOUNT 40
+
+//settings for the WIFI-module on Serial1
+#define SSID        "Free WiFi"
+#define PASSWORD    "jemoeder"
+#define HOST_NAME   "192.168.0.5"
+#define HOST_PORT   (80)
+
+ESP8266 wifi(Serial1);
 
 const byte ROWS = 4; //four rows from keyboard
 const byte COLS = 4; //four cols from keyboard
@@ -44,6 +54,7 @@ boolean ledPin_state;
 State Standby = State(standbyEnterState, standbyState, standbyExitState);
 State Processing = State(processingState);
 State MotorTest = State(motorStartState, motorTurningState, motorExitState);
+State Wifi = State(wifiState);
 
 FSM ArduinoStateMachine = FSM(Standby);
 
@@ -68,10 +79,42 @@ void setup(){
 	attachInterrupt(0, motorStop, RISING); //interrupt for full rotation of motor
 	// set up the LCD's number of columns and rows: 
 	lcd.begin(16, 2);
+	setupWifi();
 }
 
 void loop(){
 	ArduinoStateMachine.update(); //starts the function that's part of the state
 }
 
+void setupWifi(){
+
+	Serial.print("FW Version:");
+	Serial.println(wifi.getVersion().c_str());
+
+	if (wifi.setOprToStationSoftAP()) {
+	//	Serial.print("to station + softap ok\r\n");
+	}
+	else {
+		Serial.print("to station + softap err\r\n");
+	}
+
+	if (wifi.joinAP(SSID, PASSWORD)) {
+	//	Serial.print("Join AP success\r\n");
+
+		Serial.print("IP:");
+		Serial.println(wifi.getLocalIP().c_str());
+	}
+	else {
+		Serial.print("Join AP failure\r\n");
+	}
+
+	if (wifi.disableMUX()) {
+	//	Serial.print("single ok\r\n");
+	}
+	else {
+	//	Serial.print("single err\r\n");
+	}
+
+	//Serial.print("setup end\r\n");
+}
 

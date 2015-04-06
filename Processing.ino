@@ -1,7 +1,7 @@
 void processingState(){
-	//Serial.print(selectedColumn);
-	//Serial.print(".");
-	//Serial.println(selectedRow);
+	Serial.print(selectedColumn);
+	Serial.print(".");
+	Serial.println(selectedRow);
 	lcd.clear();
 	//checking if row isn't empty
 	int inventorySelected = inventory[matrixToInt()];
