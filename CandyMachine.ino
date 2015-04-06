@@ -48,6 +48,9 @@ byte motorPin = 12;
 byte selectedRow = 0;
 byte selectedColumn = 0;
 
+long accesscode = 0;
+int enterednrs = 0;
+
 boolean blink = false;
 boolean ledPin_state;
 

@@ -1,6 +1,8 @@
 void standbyEnterState(){
 	selectedColumn = 0; //reset row and column
 	selectedRow = 0;
+	enterednrs = 0;
+	accesscode = 0;
 	lcd.clear();
 	lcd.print("Kies een product");
 	digitalWrite(ledPin, !digitalRead(ledPin));

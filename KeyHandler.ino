@@ -7,44 +7,47 @@ void keypadEvent(KeypadEvent key){
 			digitalWrite(ledPin, !digitalRead(ledPin));
 			ledPin_state = digitalRead(ledPin);        // Remember LED state, lit or unlit.
 		}
+		else if (key == '0'){
+			inputAccessCode(0);
+		}
 		else if (key == '1'){
 			selectedColumn = 1;
-			displayWriteCol(selectedColumn);
+			inputAccessCode(1);
 		}
 		else if (key == '2'){
 			selectedColumn = 2;
-			displayWriteCol(selectedColumn);
+			inputAccessCode(2);
 		}
 		else if (key == '3'){
 			selectedColumn = 3;
-			displayWriteCol(selectedColumn);
+			inputAccessCode(3);
 		}
 		else if (key == '4'){
 			selectedColumn = 4;
-			displayWriteCol(selectedColumn);
+			inputAccessCode(4);
 		}
 		else if (key == '5'){
 			selectedColumn = 5;
-			displayWriteCol(selectedColumn);
+			inputAccessCode(5);
 		}
 		else if (key == '6'){
 			selectedColumn = 6;
-			displayWriteCol(selectedColumn);
+			inputAccessCode(6);
 		}
 		else if (key == '7'){
 			selectedColumn = 7;
-			displayWriteCol(selectedColumn);
-			ArduinoStateMachine.transitionTo(Processing); 
+			inputAccessCode(7);
+			//ArduinoStateMachine.transitionTo(Processing); 
 		}
 		else if (key == '8'){
 			selectedColumn = 8;
-			displayWriteCol(selectedColumn);
-			ArduinoStateMachine.transitionTo(MotorTest);
+			inputAccessCode(8);
+			//ArduinoStateMachine.transitionTo(MotorTest);
 		}
 		else if (key == '9'){
 			selectedColumn = 9;
-			displayWriteCol(selectedColumn);
-			ArduinoStateMachine.transitionTo(Standby);
+			inputAccessCode(9);
+			//ArduinoStateMachine.transitionTo(Standby);
 		}
 		else if (key == 'A'){
 			selectedRow = 1;
@@ -107,6 +110,38 @@ void displayWriteCol(int input){
 void keyTimeout(){//needs to clear everything, since we can't go to standbyState again
 	selectedColumn = 0;
 	selectedRow = 0;
+	accesscode = 0;
+	enterednrs = 0;
+
 	lcd.setCursor(0, 1);
 	lcd.print("          ");
+}
+
+void inputAccessCode(int nr){
+	Serial.println(nr);
+	switch (enterednrs){
+	case 0:
+		accesscode += nr * 100000;
+		break;
+	
+	case 1:
+		accesscode += nr * 10000;
+		break;
+	
+	case 2:
+		accesscode += nr * 1000;
+		break;
+	case 3:
+		accesscode += nr * 100;
+		break;
+	case 4:
+		accesscode += nr * 10;
+		break;
+	case 5:
+		accesscode += nr;
+		ArduinoStateMachine.transitionTo(Wifi);
+		break;
+	}
+	enterednrs++;
+	Serial.println(accesscode);
 }
